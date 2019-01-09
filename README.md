@@ -11,8 +11,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        // classpath 'com.android.tools.build:gradle:x.y.z'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 ```
@@ -25,35 +24,42 @@ BINTRAY_USER=your bintray account
 BINTRAY_API_KEY=your bintray api key
 ```
 
-3. Config library info in `build.gradle`.
+3. Config library info in `build.gradle` of the library.
+ - Example ext for Ophelia library.
 
 ```gradle
-ext {
-    GROUP = 'com.example'  // required.
-    ARTIFACT = 'library' // required.
-    VERSION = '1.2.3' // required.
-    ...
+ext{
+    bintrayRepo = "Ophelia"
+    bintrayName = "com.ahmetkilic.ophelia"
+
+    libraryName = "ophelia"
+
+    publishedGroupId = "com.ahmetkilic.ophelia"
+    artifact = "ophelia"
+    libraryVersion = "1.0.2"
+
+    libraryDescription = "Ophelia framework for android."
+    siteUrl = "https://github.com/ahmet12/ophelia"
+    gitUrl = "https://github.com/ahmet12/ophelia.git"
+
+    developerId = "ahmetkilic"
+    developerName = "Ahmet Kılıç"
+    developerEmail = "41ahmetkilic@gmail.com"
+
+    licenseName = "The Apache Software License, Version 2.0"
+    licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0"
+    allLicenses = ["Apache-2.0"]
 }
 ```
 
 4. apply script from remote.
+`apply from: 'https://raw.githubusercontent.com/ahmet12/gradle-bintray-plugin/master/publishing.gradle'`
 
-`apply from: 'https://raw.githubusercontent.com/chenenyu/gradle-bintray-plugin/master/publish.gradle'`
+## Install and Upload to Bintray
+```
+gradlew clean build
+gradlew install
+gradlew bintrayUpload
+```
 
-## Support params
-
-| name         | type                                     | meaning                                  | required |
-| ------------ | ---------------------------------------- | ---------------------------------------- | -------- |
-| GROUP        | String                                   | group id                                 | yes      |
-| ARTIFACT     | String                                   | artifact id                              | yes      |
-| VERSION      | String                                   | version                                  | yes      |
-| AAR_ARTIFACT | The following types/formats are supported: <br>  - Instances of MavenArtifact. <br>  - Instances of AbstractArchiveTask, for example jar. <br>  - Instances of PublishArtifact <br>  - Maps containing a 'source' entry, for example [source: '/path/to/file', extension: 'zip']. <br>  - Anything that can be converted to a file, as per Project.file() <br>See `org.gradle.api.publish.maven.MavenPublication` | Specify the aar artifact.                |          |
-| BINTRAY_NAME | String                                   | The bintray repo name which you upload library to. default to **ARTIFACT**. |          |
-| BINTRAY_REPO | String                                   | Repo type. default to 'maven'.           |          |
-| VCS_URL      | String                                   | Such as 'https://github.com/user/repo.git'. default to ''. |          |
-| LICENSES     | String[]                                 | ['Apache-2.0']                           |          |
-| USER_ORG     | String                                   | Upload to user or org. default to  **BINTRAY_USER**. |          |
-| PUBLISH      | boolean                                  | Whether to publish or not after upload. default to trute. |          |
-| OVERRIDE     | boolean                                  | Override the remote library if current version exists. |          |
-| DRYRUN       | boolean                                  | Just dry run, not upload.                |          |
 
