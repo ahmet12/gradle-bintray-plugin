@@ -62,5 +62,10 @@ gradlew clean build
 gradlew install
 gradlew bintrayUpload
 ```
-
+## Install and Upload to Bintray For Mac
+```
+./gradlew clean build
+./gradlew install
+./gradlew bintrayUpload
+```
 
